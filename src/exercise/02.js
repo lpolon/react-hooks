@@ -22,7 +22,7 @@ function Greeting({initialName = ''}) {
     Atualiza apenas no unmount. Repara que o array de dependencias não faria muito sentido.
     return () => window.localStorage.setItem('name', name)
     */
-  })
+  }, [name])
 
   function handleChange(event) {
     setName(event.target.value)

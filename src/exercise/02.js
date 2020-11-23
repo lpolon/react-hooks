@@ -4,8 +4,16 @@
 import * as React from 'react'
 
 function Greeting({initialName = ''}) {
+  /*
+  Essa é uma operação pesada. Ler do localstorage pode ser lento, então é preferível usar LAZY INITIALIAZTION, passando uma callback que retorna uma expressão, ao invés de passar uma experssão ou function call.
+  */
   const [name, setName] = React.useState(
-    window.localStorage.getItem('name') ?? initialName,
+    // AVOID:
+    // window.localStorage.getItem('name') ?? initialName,
+
+    // https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
+    // OK:
+    () => window.localStorage.getItem('name') ?? initialName,
   )
 
   React.useEffect(() => {
@@ -25,7 +33,7 @@ function Greeting({initialName = ''}) {
         <label htmlFor="name">Name: </label>
         <input value={name} onChange={handleChange} id="name" />
       </form>
-      {name ? <strong>Hello {name}</strong> : 'Please type your name'}
+      {name ? <strong>Hello, {name}</strong> : 'Please type your name'}
     </div>
   )
 }
